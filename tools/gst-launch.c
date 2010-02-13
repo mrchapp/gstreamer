@@ -716,6 +716,7 @@ main (int argc, char *argv[])
   gboolean no_sigusr_handler = FALSE;
   gboolean trace = FALSE;
   gboolean eos_on_shutdown = FALSE;
+  gboolean loop = FALSE;
   gchar *savefile = NULL;
   gchar *exclude_args = NULL;
 #ifndef GST_DISABLE_OPTION_PARSING
@@ -742,6 +743,8 @@ main (int argc, char *argv[])
         N_("Print alloc trace (if enabled at compile time)"), NULL},
     {"eos-on-shutdown", 'e', 0, G_OPTION_ARG_NONE, &eos_on_shutdown,
         N_("Force EOS on sources before shutting the pipeline down"), NULL},
+    {"loop", 'l', 0, G_OPTION_ARG_NONE, &loop,
+        N_("Repeat clip in loop without rebuilding pipeline"), NULL},
     GST_TOOLS_GOPTION_VERSION,
     {NULL}
   };
@@ -926,7 +929,18 @@ main (int argc, char *argv[])
       }
 
       tfthen = gst_util_get_timestamp ();
-      caught_error = event_loop (pipeline, TRUE, GST_STATE_PLAYING);
+      do {
+        caught_error = event_loop (pipeline, TRUE, GST_STATE_PLAYING);
+        if (loop && (caught_error == ELR_NO_ERROR)) {
+          PRINT (_("Looping ...\n"));
+          gst_element_seek (pipeline, 1.0,
+              GST_FORMAT_TIME,
+              GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
+              GST_SEEK_TYPE_SET, 0, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
+        } else {
+          break;
+        }
+      } while (TRUE);
       if (eos_on_shutdown && caught_error == ELR_INTERRUPT) {
         PRINT (_("EOS on shutdown enabled -- Forcing EOS on the pipeline\n"));
         waiting_eos = TRUE;
