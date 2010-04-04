@@ -488,6 +488,31 @@ gst_path_basename (const gchar * file_name)
 #endif
 
 /**
+ * gst_debug_log2:
+ * @category: category to log
+ * @level: level of the message is in
+ * @location: the file, function name, and line number of the location that
+ *    emitted the message
+ * @object: the object this message relates to or NULL if none
+ * @format: a printf style format string
+ * @...: optional arguments for the format
+ *
+ * Logs the given message using the currently registered debugging handlers.
+ */
+void
+gst_debug_log2 (GstDebugCategory * category, GstDebugLevel level,
+    const GstDebugTraceLocation * location,
+    GObject * object, const gchar * format, ...)
+{
+  va_list var_args;
+
+  va_start (var_args, format);
+  gst_debug_log_valist2 (category, level, location, object, format, var_args);
+  va_end (var_args);
+}
+
+
+/**
  * gst_debug_log_valist:
  * @category: category to log
  * @level: level of the message is in
@@ -506,13 +531,39 @@ gst_debug_log_valist (GstDebugCategory * category, GstDebugLevel level,
     const gchar * file, const gchar * function, gint line,
     GObject * object, const gchar * format, va_list args)
 {
+  GstDebugTraceLocation location = {
+    .file = file,
+    .function = function,
+    .line = line
+  };
+  gst_debug_log_valist2 (category, level, &location, object, format, args);
+}
+
+/**
+ * gst_debug_log_valist2:
+ * @category: category to log
+ * @level: level of the message is in
+ * @location: the file, function name, and line number of the location that
+ *    emitted the message
+ * @object: the object this message relates to or NULL if none
+ * @format: a printf style format string
+ * @args: optional arguments for the format
+ *
+ * Logs the given message using the currently registered debugging handlers.
+ */
+void
+gst_debug_log_valist2 (GstDebugCategory * category, GstDebugLevel level,
+    const GstDebugTraceLocation * location,
+    GObject * object, const gchar * format, va_list args)
+{
   GstDebugMessage message;
   LogFuncEntry *entry;
   GSList *handler;
 
   g_return_if_fail (category != NULL);
-  g_return_if_fail (file != NULL);
-  g_return_if_fail (function != NULL);
+  g_return_if_fail (location != NULL);
+  g_return_if_fail (location->file != NULL);
+  g_return_if_fail (location->function != NULL);
   g_return_if_fail (format != NULL);
 
   /* The predefined macro __FILE__ is always the exact path given to the
@@ -530,8 +581,9 @@ gst_debug_log_valist (GstDebugCategory * category, GstDebugLevel level,
   while (handler) {
     entry = handler->data;
     handler = g_slist_next (handler);
-    entry->func (category, level, file, function, line, object, &message,
-        entry->user_data);
+    // TODO: change GstLogFunction and pass GstDebugTraceLocation ptr instead..
+    entry->func (category, level, location->file, location->function,
+        location->line, object, &message, entry->user_data);
   }
   g_free (message.message);
   va_end (message.arguments);
@@ -604,7 +656,7 @@ gst_info_structure_to_string (GstStructure * s)
     return gst_structure_to_string (s);
 }
 
-static gchar *
+gchar *
 gst_debug_print_object (gpointer ptr)
 {
   GObject *object = (GObject *) ptr;
@@ -702,7 +754,7 @@ gst_debug_print_object (gpointer ptr)
 
 #ifdef HAVE_PRINTF_EXTENSION
 
-static gchar *
+gchar *
 gst_debug_print_segment (gpointer ptr)
 {
   GstSegment *segment = (GstSegment *) ptr;
