@@ -177,6 +177,8 @@ struct _GstDebugCategory {
 
   const gchar *		name;
   const gchar *		description;
+
+  void *ext;                /**< for use by LD_PRELOADED trace extension */
 };
 
 /********** some convenience macros for debugging **********/
@@ -260,6 +262,14 @@ typedef void (*GstLogFunction)  (GstDebugCategory * category,
 /* FIXME 0.11: move this into private headers */
 void            _gst_debug_init (void);
 
+typedef struct {
+	const gchar *file;
+	const gchar *function;
+	const gint   line;
+} GstDebugTraceLocation;
+
+#define GST_DEBUG_TRACE_LOCATION() \
+	{ __FILE__, GST_FUNCTION, __LINE__ }
 
 #ifdef GST_USING_PRINTF_EXTENSION
 
@@ -269,6 +279,13 @@ void		    gst_debug_log            (GstDebugCategory * category,
                                           const gchar      * file,
                                           const gchar      * function,
                                           gint               line,
+                                          GObject          * object,
+                                          const gchar      * format,
+                                          ...) G_GNUC_NO_INSTRUMENT;
+
+void		    gst_debug_log2           (GstDebugCategory * category,
+                                          GstDebugLevel      level,
+                                          const GstDebugTraceLocation *location,
                                           GObject          * object,
                                           const gchar      * format,
                                           ...) G_GNUC_NO_INSTRUMENT;
@@ -283,6 +300,13 @@ void		    gst_debug_log            (GstDebugCategory * category,
                                           GObject          * object,
                                           const gchar      * format,
                                           ...) G_GNUC_PRINTF (7, 8) G_GNUC_NO_INSTRUMENT;
+
+void		    gst_debug_log2           (GstDebugCategory * category,
+                                          GstDebugLevel      level,
+                                          const GstDebugTraceLocation *location,
+                                          GObject          * object,
+                                          const gchar      * format,
+                                          ...) G_GNUC_PRINTF (5, 6) G_GNUC_NO_INSTRUMENT;
 
 #endif /* GST_USING_PRINTF_EXTENSION */
 
@@ -321,7 +345,20 @@ G_CONST_RETURN gchar *
 	_gst_debug_nameof_funcptr	(GstDebugFuncPtr	func) G_GNUC_NO_INSTRUMENT;
 
 
+void            gst_debug_log_valist2    (GstDebugCategory * category,
+                                          GstDebugLevel      level,
+                                          const GstDebugTraceLocation *location,
+                                          GObject          * object,
+                                          const gchar      * format,
+                                          va_list            args) G_GNUC_NO_INSTRUMENT;
+
 const gchar   * gst_debug_message_get    (GstDebugMessage  * message);
+
+gchar *         gst_debug_print_object (gpointer ptr);
+
+#ifdef HAVE_PRINTF_EXTENSION
+gchar *         gst_debug_print_segment (gpointer ptr);
+#endif
 
 void            gst_debug_log_default    (GstDebugCategory * category,
                                           GstDebugLevel      level,
@@ -495,19 +532,41 @@ GST_EXPORT GstDebugLevel            __gst_debug_min;
  * debugging messages. You will probably want to use one of the ones described
  * below.
  */
+#if defined(GST_USING_PRINTF_EXTENSION) && defined(G_HAVE_GNUC_VARARGS)
+#define GST_CAT_LEVEL_LOG_obj(cat,level,object,str,args...) G_STMT_START{  \
+  if (G_UNLIKELY (level <= __gst_debug_min)) {                             \
+    const GstDebugTraceLocation loc = GST_DEBUG_TRACE_LOCATION();          \
+    gst_debug_log2 ((cat), (level), &loc, NULL, "%"GST_PTR_FORMAT" "str,   \
+        (object), ##args );                                                \
+  }                                                                        \
+}G_STMT_END
+#define GST_CAT_LEVEL_LOG_noobj(cat,level,object,str,args...) G_STMT_START{\
+  if (G_UNLIKELY (level <= __gst_debug_min)) {                             \
+    const GstDebugTraceLocation loc = GST_DEBUG_TRACE_LOCATION();          \
+    gst_debug_log2 ((cat), (level), &loc, NULL, (str), ##args );           \
+  }                                                                        \
+}G_STMT_END
+#else
+#  define GST_CAT_LEVEL_LOG_obj   GST_CAT_LEVEL_LOG
+#  define GST_CAT_LEVEL_LOG_noobj GST_CAT_LEVEL_LOG
+#endif
+
+
 #ifdef G_HAVE_ISO_VARARGS
 #define GST_CAT_LEVEL_LOG(cat,level,object,...) G_STMT_START{		\
-  if (G_UNLIKELY (level <= __gst_debug_min)) {						\
-    gst_debug_log ((cat), (level), __FILE__, GST_FUNCTION, __LINE__,	\
-        (GObject *) (object), __VA_ARGS__);				\
+  if (G_UNLIKELY (level <= __gst_debug_min)) {	\
+	const GstDebugTraceLocation loc = GST_DEBUG_TRACE_LOCATION();	\
+    gst_debug_log2 ((cat), (level), &loc, (GObject *) (object),		\
+            __VA_ARGS__);											\
   }									\
 }G_STMT_END
 #else /* G_HAVE_GNUC_VARARGS */
 #ifdef G_HAVE_GNUC_VARARGS
 #define GST_CAT_LEVEL_LOG(cat,level,object,args...) G_STMT_START{	\
   if (G_UNLIKELY (level <= __gst_debug_min)) {						\
-    gst_debug_log ((cat), (level), __FILE__, GST_FUNCTION, __LINE__,	\
-        (GObject *) (object), ##args );					\
+    const GstDebugTraceLocation loc = GST_DEBUG_TRACE_LOCATION();	\
+    gst_debug_log2 ((cat), (level), &loc, (GObject *) (object),		\
+            ##args );											    \
   }									\
 }G_STMT_END
 #else /* no variadic macros, use inline */
@@ -1244,6 +1303,7 @@ GST_TRACE (const char *format, ...)
 
 #if defined(__GNUC__) && __GNUC__ >= 3
 #  pragma GCC poison gst_debug_log
+#  pragma GCC poison gst_debug_log2
 #  pragma GCC poison gst_debug_log_valist
 #  pragma GCC poison _gst_debug_category_new
 #endif
