@@ -96,6 +96,7 @@ static GstQueryTypeDefinition standard_definitions[] = {
   {GST_QUERY_BUFFERING, "buffering", "Buffering status", 0},
   {GST_QUERY_CUSTOM, "custom", "Custom query", 0},
   {GST_QUERY_URI, "uri", "URI of the source or sink", 0},
+  {GST_QUERY_BUFFERS, "buffers", "Minimum buffer requirements", 0},
   {0, NULL, NULL, 0}
 };
 
@@ -1480,4 +1481,144 @@ gst_query_parse_uri (GstQuery * query, gchar ** uri)
   if (uri)
     *uri = g_value_dup_string (gst_structure_id_get_value (query->structure,
             GST_QUARK (URI)));
+}
+
+/**
+ * gst_query_new_buffers:
+ * @caps: the #GstCaps for the buffers that are going to be allocated
+ *
+ * Constructs a new buffer requirements query object to query buffer
+ * requirements for a particular caps.  Use gst_query_unref() when done
+ * with it.
+ *
+ * Returns: A #GstQuery
+ */
+GstQuery *
+gst_query_new_buffers (GstCaps * caps)
+{
+  GstQuery *query;
+  GstStructure *structure;
+
+  /* XXX could add size here, for linear (non YUV/RGB) buffers?  But I'm not
+   * entirely sure what is the use-case for that.. it should be easy enough
+   * to add more optional reply fields later
+   */
+  structure = gst_structure_id_new (GST_QUARK (QUERY_BUFFERS),
+      GST_QUARK (CAPS), GST_TYPE_CAPS, caps,
+      GST_QUARK (COUNT), G_TYPE_INT, -1,
+      GST_QUARK (WIDTH), G_TYPE_INT, -1,
+      GST_QUARK (HEIGHT), G_TYPE_INT, -1, NULL);
+
+  query = gst_query_new (GST_QUERY_BUFFERS, structure);
+
+  return query;
+}
+
+/**
+ * gst_query_set_buffers_count:
+ * @count: minimum number of buffers required
+ *
+ * Answer a buffers query by setting the minimum number of buffers required.
+ * If there is no minimum buffer count requirement, don't set this field in
+ * the query.
+ */
+void
+gst_query_set_buffers_count (GstQuery * query, gint count)
+{
+  GstStructure *structure;
+
+  g_return_if_fail (GST_QUERY_TYPE (query) == GST_QUERY_BUFFERS);
+
+  structure = gst_query_get_structure (query);
+  gst_structure_id_set (structure, GST_QUARK (COUNT), G_TYPE_INT, count, NULL);
+}
+
+/**
+ * gst_query_set_buffers_dimensions:
+ * @width: minimum buffer width
+ * @height: minimum buffer height
+ *
+ * Answer a buffers query by setting the minimum buffer dimensions required.
+ * If there is no minimum buffer dimensions (beyond the width/height specified
+ * in the #GstCaps), don't set this field in the query.
+ */
+void
+gst_query_set_buffers_dimensions (GstQuery * query, gint width, gint height)
+{
+  GstStructure *structure;
+
+  g_return_if_fail (GST_QUERY_TYPE (query) == GST_QUERY_BUFFERS);
+
+  structure = gst_query_get_structure (query);
+  gst_structure_id_set (structure,
+      GST_QUARK (WIDTH), G_TYPE_INT, width,
+      GST_QUARK (HEIGHT), G_TYPE_INT, height, NULL);
+}
+
+/**
+ * gst_query_parse_buffers_caps:
+ * @query: a #GstQuery
+ * @caps: the storage for the #GstCaps pointer, or NULL
+ *
+ * Parse a buffers query.
+ */
+void
+gst_query_parse_buffers_caps (GstQuery * query, const GstCaps ** caps)
+{
+  GstStructure *structure;
+
+  g_return_if_fail (GST_QUERY_TYPE (query) == GST_QUERY_BUFFERS);
+
+  structure = gst_query_get_structure (query);
+  if (caps)
+    *caps = gst_value_get_caps (gst_structure_id_get_value (structure,
+            GST_QUARK (CAPS)));
+}
+
+/**
+ * gst_query_parse_buffers_count:
+ * @query: a #GstQuery
+ * @count: the storage for minimum number of buffers, or NULL
+ *
+ * Parse a buffers query answer to see the minimum number of buffers
+ * required.  A returned value of -1 means there is no minimum requirement
+ */
+void
+gst_query_parse_buffers_count (GstQuery * query, gint * count)
+{
+  GstStructure *structure;
+
+  g_return_if_fail (GST_QUERY_TYPE (query) == GST_QUERY_BUFFERS);
+
+  structure = gst_query_get_structure (query);
+  if (count)
+    *count = g_value_get_int (gst_structure_id_get_value (structure,
+            GST_QUARK (COUNT)));
+}
+
+/**
+ * gst_query_parse_buffers_dimensions:
+ * @query: a #GstQuery
+ * @width: the storage for minimum width, or NULL
+ * @height: the storage for minimum height, or NULL
+ *
+ * Parse a buffers query answer to see the minimum buffer dimensions required.
+ * A returned value of -1 for either dimension means there is no minimum
+ * requirement in that axis
+ */
+void
+gst_query_parse_buffers_dimensions (GstQuery * query, gint * width,
+    gint * height)
+{
+  GstStructure *structure;
+
+  g_return_if_fail (GST_QUERY_TYPE (query) == GST_QUERY_BUFFERS);
+
+  structure = gst_query_get_structure (query);
+  if (width)
+    *width = g_value_get_int (gst_structure_id_get_value (structure,
+            GST_QUARK (WIDTH)));
+  if (height)
+    *height = g_value_get_int (gst_structure_id_get_value (structure,
+            GST_QUARK (HEIGHT)));
 }
