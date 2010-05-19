@@ -31,6 +31,7 @@
 #include <gst/gstminiobject.h>
 #include <gst/gststructure.h>
 #include <gst/gstformat.h>
+#include <gst/gstcaps.h>
 
 G_BEGIN_DECLS
 
@@ -51,6 +52,9 @@ G_BEGIN_DECLS
  * @GST_QUERY_CUSTOM: a custom application or element defined query. Since
  * 0.10.22.
  * @GST_QUERY_URI: query the URI of the source or sink. Since 0.10.22.
+ * @GST_QUERY_BUFFERS: query the upstream users of pad_alloc()'d buffers to
+ * find any particular requirements about buffer size (padding) or numbers of
+ * buffers. Since ?.?.?.
  *
  * Standard predefined Query types
  */
@@ -69,7 +73,8 @@ typedef enum {
   GST_QUERY_FORMATS,
   GST_QUERY_BUFFERING,
   GST_QUERY_CUSTOM,
-  GST_QUERY_URI
+  GST_QUERY_URI,
+  GST_QUERY_BUFFERS
 } GstQueryType;
 
 /**
@@ -322,6 +327,15 @@ void            gst_query_parse_buffering_range   (GstQuery *query, GstFormat *f
 GstQuery *      gst_query_new_uri                 (void);
 void            gst_query_parse_uri               (GstQuery *query, gchar **uri);
 void            gst_query_set_uri                 (GstQuery *query, const gchar *uri);
+
+/* buffer requirements query */
+GstQuery *      gst_query_new_buffers             (GstCaps * caps);
+void            gst_query_set_buffers_count       (GstQuery * query, gint count);
+void            gst_query_set_buffers_dimensions  (GstQuery * query, gint width, gint height);
+void            gst_query_parse_buffers_caps      (GstQuery * query, const GstCaps ** caps);
+void            gst_query_parse_buffers_count     (GstQuery * query, gint * count);
+void            gst_query_parse_buffers_dimensions (GstQuery * query, gint * width, gint * height);
+
 
 G_END_DECLS
 
