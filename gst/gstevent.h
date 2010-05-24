@@ -94,6 +94,10 @@ typedef enum {
  *                          send messages that should be emitted in sync with
  *                          rendering.
  *                          Since: 0.10.26
+ * @GST_EVENT_CROP: An event that can set horizontal (pan/scan) and vertical
+ *                   (tilt/scan) offset and width/height within a larger
+ *                   image.  This event precedes the buffer to which it
+ *                   applies.
  * @GST_EVENT_QOS: A quality message. Used to indicate to upstream elements
  *                 that the downstream elements should adjust their processing
  *                 rate.
@@ -134,6 +138,7 @@ typedef enum {
   GST_EVENT_TAG                   = GST_EVENT_MAKE_TYPE (7, FLAG(DOWNSTREAM) | FLAG(SERIALIZED)),
   GST_EVENT_BUFFERSIZE            = GST_EVENT_MAKE_TYPE (8, FLAG(DOWNSTREAM) | FLAG(SERIALIZED)),
   GST_EVENT_SINK_MESSAGE          = GST_EVENT_MAKE_TYPE (9, FLAG(DOWNSTREAM) | FLAG(SERIALIZED)),
+  GST_EVENT_CROP                  = GST_EVENT_MAKE_TYPE (10, FLAG(DOWNSTREAM) | FLAG(SERIALIZED)),
   /* upstream events */
   GST_EVENT_QOS                   = GST_EVENT_MAKE_TYPE (15, FLAG(UPSTREAM)),
   GST_EVENT_SEEK                  = GST_EVENT_MAKE_TYPE (16, FLAG(UPSTREAM)),
@@ -516,6 +521,12 @@ GstEvent*       gst_event_new_step              (GstFormat format, guint64 amoun
                                                  gboolean flush, gboolean intermediate);
 void            gst_event_parse_step            (GstEvent *event, GstFormat *format, guint64 *amount,
                                                  gdouble *rate, gboolean *flush, gboolean *intermediate);
+
+/* crop event */
+GstEvent *      gst_event_new_crop              (gint top, gint left, gint width, gint height);
+void            gst_event_parse_crop            (GstEvent * event, gint * top, gint * left,
+                                                 gint * width, gint * height);
+
 
 G_END_DECLS
 

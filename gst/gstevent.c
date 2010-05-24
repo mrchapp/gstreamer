@@ -116,6 +116,7 @@ static GstEventQuarks event_quarks[] = {
   {GST_EVENT_TAG, "tag", 0},
   {GST_EVENT_BUFFERSIZE, "buffersize", 0},
   {GST_EVENT_SINK_MESSAGE, "sink-message", 0},
+  {GST_EVENT_CROP, "crop", 0},
   {GST_EVENT_QOS, "qos", 0},
   {GST_EVENT_SEEK, "seek", 0},
   {GST_EVENT_NAVIGATION, "navigation", 0},
@@ -1299,4 +1300,66 @@ gst_event_parse_sink_message (GstEvent * event, GstMessage ** msg)
     *msg =
         GST_MESSAGE (gst_value_dup_mini_object (gst_structure_id_get_value
             (event->structure, GST_QUARK (MESSAGE))));
+}
+
+/**
+ * gst_event_new_crop:
+ * @top:  the new offset to top of sub-image
+ * @left:  the new offset to left of sub-image
+ * @width:  the new width
+ * @height:  the new height
+ *
+ * Create a new crop event.
+ */
+GstEvent *
+gst_event_new_crop (gint top, gint left, gint width, gint height)
+{
+  GstEvent *event;
+  GstStructure *structure;
+
+  GST_CAT_INFO (GST_CAT_EVENT, "creating crop event: %d,%d %dx%d",
+      top, left, width, height);
+
+  structure = gst_structure_id_new (GST_QUARK (EVENT_CROP),
+      GST_QUARK (TOP), G_TYPE_INT, top,
+      GST_QUARK (LEFT), G_TYPE_INT, left,
+      GST_QUARK (WIDTH), G_TYPE_INT, width,
+      GST_QUARK (HEIGHT), G_TYPE_INT, height, NULL);
+  event = gst_event_new_custom (GST_EVENT_CROP, structure);
+
+  return event;
+}
+
+/**
+ * gst_event_parse_crop:
+ * @event: The event to query
+ * @top: A pointer to store top offset in
+ * @left: A pointer to store left offset in
+ * @width: A pointer to store width in
+ * @height: A pointer to store height in
+ *
+ * Parse the crop event.
+ */
+void
+gst_event_parse_crop (GstEvent * event, gint * top, gint * left,
+    gint * width, gint * height)
+{
+  const GstStructure *structure;
+
+  g_return_if_fail (GST_IS_EVENT (event));
+  g_return_if_fail (GST_EVENT_TYPE (event) == GST_EVENT_CROP);
+
+  structure = gst_event_get_structure (event);
+  if (top)
+    *top = g_value_get_int (gst_structure_id_get_value (structure,
+            GST_QUARK (TOP)));
+  if (left)
+    *left = g_value_get_int (gst_structure_id_get_value (structure,
+            GST_QUARK (LEFT)));
+  if (width)
+    *width = g_value_get_int (gst_structure_id_get_value (structure,
+            GST_QUARK (WIDTH)));
+  if (height)
+    *height = g_value_get_int (gst_structure_id_get_value (structure,
+            GST_QUARK (HEIGHT)));
 }
