@@ -2260,14 +2260,26 @@ gst_base_transform_handle_buffer (GstBaseTransform * trans, GstBuffer * inbuf,
 
 no_qos:
 
-  /* first try to allocate an output buffer based on the currently negotiated
-   * format. While we call pad-alloc we could renegotiate the srcpad format or
-   * have a new suggestion for upstream buffer-alloc. 
-   * In any case, outbuf will contain a buffer suitable for doing the configured
-   * transform after this function. */
-  ret = gst_base_transform_prepare_output_buffer (trans, inbuf, outbuf);
-  if (G_UNLIKELY (ret != GST_FLOW_OK))
-    goto no_buffer;
+  if (trans->passthrough) {
+    /* I'm not yet sure if we should bypass allocating output buffer in case of
+     * passthrough, or if I should override the prepare_output_buffer vmethod..
+     * I think the argument for always doing buffer allocation is to give a
+     * chance for upstream caps-renegotiation.. except I think the existing
+     * gst_base_transform_buffer_alloc() which itself does a pad_alloc() should
+     * be sufficient..
+     */
+    GST_DEBUG_OBJECT (trans, "reuse input buffer");
+    *outbuf = inbuf;
+  } else {
+    /* first try to allocate an output buffer based on the currently negotiated
+     * format. While we call pad-alloc we could renegotiate the srcpad format or
+     * have a new suggestion for upstream buffer-alloc.
+     * In any case, outbuf will contain a buffer suitable for doing the configured
+     * transform after this function. */
+    ret = gst_base_transform_prepare_output_buffer (trans, inbuf, outbuf);
+    if (G_UNLIKELY (ret != GST_FLOW_OK))
+      goto no_buffer;
+  }
 
   /* now perform the needed transform */
   if (trans->passthrough) {
