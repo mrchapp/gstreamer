@@ -177,7 +177,12 @@ common_conf_flags = \
 	--enable-DEBUG \
 	--enable-debug \
 	--with-package-name=$(GST_PACKAGE_NAME) \
-	--with-package-origin=$(GST_PACKAGE_ORIGIN)
+	--with-package-origin=$(GST_PACKAGE_ORIGIN) \
+        --with-buffer-alignment=128 \
+        --disable-examples \
+        --disable-tests \
+        --disable-failing-tests \
+        --disable-valgrind
 
 indep_conf_flags = \
 	--with-html-dir=\$${prefix}/share/doc/$(gst_pkgname)-doc
