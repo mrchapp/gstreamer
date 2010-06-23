@@ -1585,3 +1585,16 @@ libgstreamer-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_xml_parse_memory@Base 0.10.0
  gst_xml_write@Base 0.10.0
  gst_xml_write_file@Base 0.10.0
+ gst_debug_log2@Base 0.10.0
+ gst_debug_log_valist2@Base 0.10.0
+ gst_debug_print_object@Base 0.10.0
+ gst_debug_print_segment@Base 0.10.0
+ gst_event_new_vstab@Base 0.10.0
+ gst_event_parse_vstab@Base 0.10.0
+ gst_query_new_buffers@Base 0.10.0
+ gst_query_parse_buffers_caps@Base 0.10.0
+ gst_query_parse_buffers_count@Base 0.10.0
+ gst_query_parse_buffers_dimensions@Base 0.10.0
+ gst_query_set_buffers_count@Base 0.10.0
+ gst_query_set_buffers_dimensions@Base 0.10.0
+
