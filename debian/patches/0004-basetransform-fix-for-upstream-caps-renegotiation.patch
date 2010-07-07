@@ -1,0 +1,64 @@
+From 70a562287fa3fac7fba6c8b9267eae3ff1114fab Mon Sep 17 00:00:00 2001
+From: Rob Clark <rob@ti.com>
+Date: Sat, 22 May 2010 16:33:11 -0500
+Subject: [PATCH 4/6] basetransform fix for upstream caps-renegotiation
+
+If initially pass-through caps are negotiated between a transform element's
+sink and src pads, but then the downstream element returns different caps
+on a buffer from pad_alloc(), basetransform gets stuck with proxy_alloc=TRUE
+even though the upstream peer doesn't accept the caps, causing
+gst_pad_peer_accept_caps() to be called on each buffer in _buffer_alloc():
+
+    if (!gst_caps_is_equal (newcaps, caps)) {
+      GST_DEBUG_OBJECT (trans, "caps are new");
+      /* we have new caps, see if we can proxy downstream */
+>>    if (gst_pad_peer_accept_caps (pad, newcaps)) {
+        /* peer accepts the caps, return a buffer in this format */
+        GST_DEBUG_OBJECT (trans, "peer accepted new caps");
+
+which is taking ~40ms/frame.
+
+This patch does two things.  (1) if the buffer returned from pad_alloc() has
+new caps, trigger the decision whether to proxy the buffer-alloc to be
+revisited, and (2) disable proxy if peer does not accept new caps.  (The first
+part may not be strictly needed, but seemed like a good idea.)
+
+Note that this issue would not arise except in case of downstream elements
+who have on their template-caps, some that would be suitable for pass-through,
+but at runtime pick more restrictive caps (for ex, after querying a driver for
+what formats it actually supports).
+---
+ libs/gst/base/gstbasetransform.c |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/libs/gst/base/gstbasetransform.c b/libs/gst/base/gstbasetransform.c
+index 97faa73..2795c10 100644
+--- a/libs/gst/base/gstbasetransform.c
++++ b/libs/gst/base/gstbasetransform.c
+@@ -1319,6 +1319,9 @@ gst_base_transform_prepare_output_buffer (GstBaseTransform * trans,
+       /* new format configure, and use the new output buffer */
+       gst_pad_set_caps (trans->srcpad, newcaps);
+       discard = FALSE;
++      /* clear previous cached sink-pad caps, so buffer_alloc knows that
++       * it needs to revisit the decision about whether to proxy or not: */
++      gst_caps_replace (&priv->sink_alloc, NULL);
+       /* if we got a buffer of the wrong size, discard it now and make sure we
+        * allocate a propertly sized buffer later. */
+       if (newsize != expsize) {
+@@ -1720,8 +1723,11 @@ gst_base_transform_buffer_alloc (GstPad * pad, guint64 offset, guint size,
+         GST_OBJECT_UNLOCK (pad);
+       } else {
+         GST_DEBUG_OBJECT (trans, "peer did not accept new caps");
+-        /* peer does not accept the caps, free the buffer we received and
+-         * create a buffer of the requested format by the default handler. */
++        /* peer does not accept the caps, disable proxy_alloc, free the
++         * buffer we received and create a buffer of the requested format
++         * by the default handler. */
++        GST_DEBUG_OBJECT (trans, "disabling proxy");
++        priv->proxy_alloc = FALSE;
+         gst_buffer_unref (*buf);
+         *buf = NULL;
+       }
+-- 
+1.7.1
+
