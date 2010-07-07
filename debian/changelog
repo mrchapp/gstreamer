@@ -1,3 +1,13 @@
+gstreamer0.10 (0.10.29.3-1+ti0.24.7~1) maverick; urgency=low
+
+  * TI patches from L24.7
+  * Updated GStreamer symbols according to TI L24.7 patches
+  * Added new symbols in the documentation
+  * debian/rules: Modified configuration flags Added a custom --with-
+    buffer-alignement and disabled tests, examples and valgrind
+
+ -- Olivier Naudan <o-naudan@ti.com>  Wed, 07 Jul 2010 19:18:28 +0200
+
 gstreamer0.10 (0.10.29.3-1) experimental; urgency=low
 
   * New upstream pre-release:
