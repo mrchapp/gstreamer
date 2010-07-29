@@ -1,3 +1,26 @@
+gstreamer0.10 (0.10.30-1+ti0.24.7) maverick; urgency=low
+
+  * Reapplied TI changes on 0.10.30-1
+
+ -- Olivier Naudan <o-naudan@ti.com>  Thu, 29 Jul 2010 10:00:00 +0200
+
+gstreamer0.10 (0.10.30-1) unstable; urgency=low
+
+  * New upstream stable release, "Safety First":
+    + debian/libgstreamer.symbols:
+      - Update new symbols version to 0.10.30.
+
+ -- Sebastian Dröge <slomo@debian.org>  Thu, 15 Jul 2010 13:48:14 +0200
+
+gstreamer0.10 (0.10.29.4-1) experimental; urgency=low
+
+  * New upstream pre-release:
+    + debian/libgstreamer.symbols:
+      - Update new symbols version to 0.10.29.4.
+      - Add new symbols.
+
+ -- Sebastian Dröge <slomo@debian.org>  Wed, 07 Jul 2010 11:40:13 +0200
+
 gstreamer0.10 (0.10.29.3-1+ti0.24.7+2) maverick; urgency=low
 
   * Fixed the incorrect versions in debian/libgstreamer.symbols

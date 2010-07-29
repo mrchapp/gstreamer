@@ -7,7 +7,7 @@ libgstbase-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_adapter_flush@Base 0.10.0
  gst_adapter_get_type@Base 0.10.0
  gst_adapter_masked_scan_uint32@Base 0.10.24
- gst_adapter_masked_scan_uint32_peek@Base 0.10.29.3
+ gst_adapter_masked_scan_uint32_peek@Base 0.10.30
  gst_adapter_new@Base 0.10.0
  gst_adapter_peek@Base 0.10.0
  gst_adapter_prev_timestamp@Base 0.10.24
@@ -24,10 +24,12 @@ libgstbase-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_base_sink_get_ts_offset@Base 0.10.15
  gst_base_sink_get_type@Base 0.10.0
  gst_base_sink_is_async_enabled@Base 0.10.15
+ gst_base_sink_is_last_buffer_enabled@Base 0.10.30
  gst_base_sink_is_qos_enabled@Base 0.10.5
  gst_base_sink_query_latency@Base 0.10.12
  gst_base_sink_set_async_enabled@Base 0.10.15
  gst_base_sink_set_blocksize@Base 0.10.22
+ gst_base_sink_set_last_buffer_enabled@Base 0.10.30
  gst_base_sink_set_max_lateness@Base 0.10.4
  gst_base_sink_set_qos_enabled@Base 0.10.5
  gst_base_sink_set_render_delay@Base 0.10.21
@@ -611,7 +613,7 @@ libgstreamer-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_caps_set_simple@Base 0.10.0
  gst_caps_set_simple_valist@Base 0.10.0
  gst_caps_set_value@Base 0.10.26
- gst_caps_steal_structure@Base 0.10.29.3
+ gst_caps_steal_structure@Base 0.10.30
  gst_caps_subtract@Base 0.10.0
  gst_caps_to_string@Base 0.10.0
  gst_caps_truncate@Base 0.10.0
@@ -649,6 +651,7 @@ libgstreamer-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_clock_id_unschedule@Base 0.10.0
  gst_clock_id_wait@Base 0.10.0
  gst_clock_id_wait_async@Base 0.10.0
+ gst_clock_id_wait_async_full@Base 0.10.30
  gst_clock_new_periodic_id@Base 0.10.0
  gst_clock_new_single_shot_id@Base 0.10.0
  gst_clock_return_get_type@Base 0.10.0
@@ -748,7 +751,7 @@ libgstreamer-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_element_link_many@Base 0.10.0
  gst_element_link_pads@Base 0.10.0
  gst_element_link_pads_filtered@Base 0.10.0
- gst_element_link_pads_full@Base 0.10.29.3
+ gst_element_link_pads_full@Base 0.10.30
  gst_element_lost_state@Base 0.10.0
  gst_element_lost_state_full@Base 0.10.24
  gst_element_make_from_uri@Base 0.10.0
@@ -1049,8 +1052,8 @@ libgstreamer-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_pad_iterate_internal_links@Base 0.10.21
  gst_pad_iterate_internal_links_default@Base 0.10.21
  gst_pad_link@Base 0.10.0
- gst_pad_link_check_get_type@Base 0.10.29.3
- gst_pad_link_full@Base 0.10.29.3
+ gst_pad_link_check_get_type@Base 0.10.30
+ gst_pad_link_full@Base 0.10.30
  gst_pad_link_return_get_type@Base 0.10.0
  gst_pad_load_and_link@Base 0.10.0
  gst_pad_new@Base 0.10.0
@@ -1321,7 +1324,7 @@ libgstreamer-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_structure_fixate_field_nearest_double@Base 0.10.0
  gst_structure_fixate_field_nearest_fraction@Base 0.10.0
  gst_structure_fixate_field_nearest_int@Base 0.10.0
- gst_structure_fixate_field_string@Base 0.10.29.3
+ gst_structure_fixate_field_string@Base 0.10.30
  gst_structure_foreach@Base 0.10.0
  gst_structure_free@Base 0.10.0
  gst_structure_from_string@Base 0.10.0
@@ -1427,7 +1430,7 @@ libgstreamer-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_tag_list_new@Base 0.10.0
  gst_tag_list_new_full@Base 0.10.24
  gst_tag_list_new_full_valist@Base 0.10.24
- gst_tag_list_peek_string_index@Base 0.10.29.3
+ gst_tag_list_peek_string_index@Base 0.10.30
  gst_tag_list_remove_tag@Base 0.10.0
  gst_tag_merge_mode_get_type@Base 0.10.0
  gst_tag_merge_strings_with_comma@Base 0.10.0
