@@ -1,3 +1,4 @@
+0000-Added-new-symbols-in-the-documentation.patch
 0001-gst-launch-add-loop-argument.patch
 0002-Changes-to-make-it-possible-to-LD_PRELOAD-libttif.patch
 0003-add-GstQueryBuffers-query.patch

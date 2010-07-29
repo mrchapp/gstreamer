@@ -956,25 +956,12 @@ GST_LEVEL_DEFAULT
 GstDebugColorFlags
 GstDebugCategory
 GstDebugGraphDetails
-GstDebugTraceLocation
 GST_STR_NULL
 GST_DEBUG_PAD_NAME
 GST_FUNCTION
 GstLogFunction
 gst_debug_log
 gst_debug_log_valist
-gst_debug_log2
-gst_debug_log_valist2
-gst_debug_print_object
-gst_debug_print_segment
-gst_event_new_vstab
-gst_event_parse_vstab
-gst_query_new_buffers
-gst_query_parse_buffers_caps
-gst_query_parse_buffers_count
-gst_query_parse_buffers_dimensions
-gst_query_set_buffers_count
-gst_query_set_buffers_dimensions
 gst_debug_message_get
 gst_debug_log_default
 gst_debug_level_get_name
@@ -1005,8 +992,6 @@ gst_debug_get_all_categories
 gst_debug_construct_term_color
 gst_debug_construct_win_color
 GST_CAT_LEVEL_LOG
-GST_CAT_LEVEL_LOG_noobj
-GST_CAT_LEVEL_LOG_obj
 GST_CAT_ERROR_OBJECT
 GST_CAT_WARNING_OBJECT
 GST_CAT_INFO_OBJECT
@@ -1047,7 +1032,6 @@ GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS
 gst_debug_print_stack_trace
 GST_TIME_FORMAT
 GST_TIME_ARGS
-GST_DEBUG_TRACE_LOCATION
 <SUBSECTION Standard>
 GST_TYPE_DEBUG_COLOR_FLAGS
 GST_TYPE_DEBUG_LEVEL

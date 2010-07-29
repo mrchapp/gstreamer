@@ -1,7 +1,9 @@
 gstreamer0.10 (0.10.30-1+ti0.24.7) maverick; urgency=low
 
   * Reapplied TI changes on 0.10.30-1
-
+  * Reverted a change in gstreamer-sections.txt and replaced with a patch
+    The net effect is the same, though the upstream file is pristine
+    
  -- Olivier Naudan <o-naudan@ti.com>  Thu, 29 Jul 2010 10:00:00 +0200
 
 gstreamer0.10 (0.10.30-1) unstable; urgency=low
