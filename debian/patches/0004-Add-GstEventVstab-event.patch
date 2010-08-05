@@ -1,7 +1,7 @@
-From 5c3898046867a166fdaf3c8821d1fa69e630d7fd Mon Sep 17 00:00:00 2001
+From cdafbb05d402b20c8077415684790dae1222c136 Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Mon, 24 May 2010 16:49:20 -0500
-Subject: [PATCH 5/6] Add GstEventVstab event
+Subject: [PATCH 4/5] Add GstEventVstab event
 
 This event can be used to set tilt/pan to take effect on the following buffer.
 ---

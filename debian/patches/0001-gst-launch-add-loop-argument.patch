@@ -1,7 +1,7 @@
-From b63265749b57830242795a801d74455a3ee1044f Mon Sep 17 00:00:00 2001
+From 80bfeb3fa931c097a3e2367755dced6385c01cb3 Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Sat, 13 Feb 2010 15:29:13 -0600
-Subject: [PATCH 1/6] gst-launch: add --loop argument
+Subject: [PATCH 1/5] gst-launch: add --loop argument
 
 if --loop is specified, automatically seek to beginning of clip when EOS is received
 ---
@@ -9,7 +9,7 @@ if --loop is specified, automatically seek to beginning of clip when EOS is rece
  1 files changed, 15 insertions(+), 1 deletions(-)
 
 diff --git a/tools/gst-launch.c b/tools/gst-launch.c
-index ab5e660..cb94049 100644
+index 0c82a22..83aa53a 100644
 --- a/tools/gst-launch.c
 +++ b/tools/gst-launch.c
 @@ -689,6 +689,7 @@ main (int argc, char *argv[])
