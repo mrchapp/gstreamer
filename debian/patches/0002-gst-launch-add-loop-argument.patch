@@ -1,7 +1,7 @@
-From 80bfeb3fa931c097a3e2367755dced6385c01cb3 Mon Sep 17 00:00:00 2001
+From aefa7025179112f51fc2a669b2bb2b460d011b10 Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Sat, 13 Feb 2010 15:29:13 -0600
-Subject: [PATCH 1/5] gst-launch: add --loop argument
+Subject: [PATCH 2/6] gst-launch: add --loop argument
 
 if --loop is specified, automatically seek to beginning of clip when EOS is received
 ---
