@@ -1,4 +1,4 @@
-gstreamer0.10 (0.10.30-1+ti0.24.8.2+1) maverick; urgency=low
+gstreamer0.10 (0.10.30-1+ti0.24.8.2+2) maverick; urgency=low
 
   * Updated TI patches from 0.24.8.2
   * New patch to update the autogen-generated files
