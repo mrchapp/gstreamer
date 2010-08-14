@@ -1,8 +1,9 @@
 gstreamer0.10 (0.10.30-1+ti0.24.8.2+1) maverick; urgency=low
 
   * Updated TI patches from 0.24.8.2
-
- -- Olivier Naudan <o-naudan@ti.com>  Tue, 10 Aug 2010 17:00:00 +0200
+  * New patch to update the autogen-generated files
+  
+ -- Olivier Naudan <o-naudan@ti.com>  Fri, 13 Aug 2010 20:00:00 +0200
 
 gstreamer0.10 (0.10.30-1+ti0.24.8.1+1) maverick; urgency=low
 
