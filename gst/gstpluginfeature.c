@@ -297,8 +297,7 @@ gst_plugin_feature_list_copy (GList * list)
 
 /**
  * gst_plugin_feature_list_debug:
- * @list: (transfer none) (element-type Gst.PluginFeature): a #GList of
- *     plugin features
+ * @list: a #GList of plugin features
  *
  * Debug the plugin feature names in @list.
  *

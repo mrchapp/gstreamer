@@ -830,9 +830,8 @@ element_filter (GstPluginFeature * feature, FilterData * data)
  * with a rank greater or equal to @minrank will be returned.
  * The list of factories is returned by decreasing rank.
  *
- * Returns: (transfer full) (element-type Gst.ElementFactory): a #GList of
- *     #GstElementFactory elements. Use gst_plugin_feature_list_free() after
- *     usage.
+ * Returns: a #GList of #GstElementFactory elements. Use
+ * gst_plugin_feature_list_free() after usage.
  *
  * Since: 0.10.31
  */
@@ -859,8 +858,7 @@ gst_element_factory_list_get_elements (GstElementFactoryListType type,
 
 /**
  * gst_element_factory_list_filter:
- * @list: (transfer none) (element-type Gst.ElementFactory): a #GList of
- *     #GstElementFactory to filter
+ * @list: a #GList of #GstElementFactory to filter
  * @caps: a #GstCaps
  * @direction: a #GstPadDirection to filter on
  * @subsetonly: whether to filter on caps subsets or not.
@@ -872,9 +870,8 @@ gst_element_factory_list_get_elements (GstElementFactoryListType type,
  * are a complete superset of @caps will be returned. Else any element
  * whose pad templates caps can intersect with @caps will be returned.
  *
- * Returns: (transfer full) (element-type Gst.ElementFactory): a #GList of
- *     #GstElementFactory elements that match the given requisits.
- *     Use #gst_plugin_feature_list_free after usage.
+ * Returns: a #GList of #GstElementFactory elements that match the
+ * given requisits. Use #gst_plugin_feature_list_free after usage.
  *
  * Since: 0.10.31
  */
@@ -917,7 +914,6 @@ gst_element_factory_list_filter (GList * list,
             (!subsetonly && gst_caps_can_intersect (caps, tmpl_caps))) {
           /* non empty intersection, we can use this element */
           result = g_list_prepend (result, gst_object_ref (factory));
-          gst_caps_unref (tmpl_caps);
           break;
         }
         gst_caps_unref (tmpl_caps);
