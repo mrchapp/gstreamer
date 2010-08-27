@@ -112,6 +112,8 @@ struct _GstQueue {
   GCond *item_del;      /* signals space now available for writing */
 
   gboolean head_needs_discont, tail_needs_discont;
+  
+  gboolean silent;      /* don't emit signals */ 
 };
 
 struct _GstQueueClass {
