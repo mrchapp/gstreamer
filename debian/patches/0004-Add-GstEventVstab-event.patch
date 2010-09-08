@@ -1,7 +1,7 @@
-From a2e7f3ab73eb4c6e31b74a8e01216b6c622f7d1f Mon Sep 17 00:00:00 2001
+From 510c380409fdf1d5748f18f5394c5d7db18ccf07 Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Mon, 24 May 2010 16:49:20 -0500
-Subject: [PATCH 5/6] Add GstEventVstab event
+Subject: [PATCH 4/6] Add GstEventVstab event
 
 This event can be used to set tilt/pan to take effect on the following buffer.
 ---
@@ -110,32 +110,32 @@ index 6fc809f..3402ccb 100644
  
  #endif /* __GST_EVENT_H__ */
 diff --git a/gst/gstquark.c b/gst/gstquark.c
-index 7277593..07ac6c9 100644
+index 58badca..491b1d9 100644
 --- a/gst/gstquark.c
 +++ b/gst/gstquark.c
 @@ -50,7 +50,7 @@ static const gchar *_quark_strings[] = {
    "intermediate", "GstMessageStepStart", "active", "eos", "sink-message",
    "message", "GstMessageQOS", "running-time", "stream-time", "jitter",
-   "quality", "processed", "dropped", "GstQueryBuffers", "caps", "count",
--  "width", "height"
-+  "width", "height", "GstEventVstab", "top", "left"
+   "quality", "processed", "dropped", "buffering-ranges", "GstQueryBuffers",
+-  "caps", "count", "width", "height"
++  "caps", "count", "width", "height", "GstEventVstab", "top", "left"
  };
  
  GQuark _priv_gst_quark_table[GST_QUARK_MAX];
 diff --git a/gst/gstquark.h b/gst/gstquark.h
-index 42e6f6a..a3bbeb0 100644
+index f4c8e0f..506cf95 100644
 --- a/gst/gstquark.h
 +++ b/gst/gstquark.h
-@@ -131,8 +131,11 @@ typedef enum _GstQuarkId
-   GST_QUARK_COUNT = 102,
-   GST_QUARK_WIDTH = 103,
-   GST_QUARK_HEIGHT = 104,
-+  GST_QUARK_EVENT_VSTAB = 105,
-+  GST_QUARK_TOP = 106,
-+  GST_QUARK_LEFT = 107,
+@@ -132,8 +132,11 @@ typedef enum _GstQuarkId
+   GST_QUARK_COUNT = 103,
+   GST_QUARK_WIDTH = 104,
+   GST_QUARK_HEIGHT = 105,
++  GST_QUARK_EVENT_VSTAB = 106,
++  GST_QUARK_TOP = 107,
++  GST_QUARK_LEFT = 108,
  
--  GST_QUARK_MAX = 105
-+  GST_QUARK_MAX = 108
+-  GST_QUARK_MAX = 106
++  GST_QUARK_MAX = 109
  } GstQuarkId;
  
  extern GQuark _priv_gst_quark_table[GST_QUARK_MAX];
