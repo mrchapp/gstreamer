@@ -1,3 +1,12 @@
+gstreamer0.10 (0.10.30-1+ti0.24.9.1+1) maverick; urgency=low
+
+  * Updated TI patches from gst-24.9-pre3.
+  * Refreshed the autogen patch.
+  * Updated GStreamer symbols according to TI patches.
+  * Added a patch to update GStreamer documentation according to TI patches.
+
+ -- Olivier Naudan <o-naudan@ti.com>  Fri, 10 Sep 2010 15:00:00 +0200
+
 gstreamer0.10 (0.10.30-1+ti0.24.8.2+2) maverick; urgency=low
 
   * Updated TI patches from 0.24.8.2
