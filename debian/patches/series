@@ -5,6 +5,6 @@
 0005-basetransform-don-t-do-unnecessary-pad_alloc.patch
 0006-gstevent-add-crop-event.patch
 0100-Added-new-symbols-in-the-documentation.patch
-0101-Added-the-auto-gen-generated-files.patch
+0110-Updated-the-autogen-generated-files.patch
 80_ia32-hack.patch
 99_ltmain_as-needed.patch
