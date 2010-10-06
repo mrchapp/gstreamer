@@ -1,3 +1,9 @@
+gstreamer0.10 (0.10.30-1+ti0.24.10.1+1) maverick; urgency=low
+
+  * Refreshed TI patches from gst-24.10-rc
+
+ -- Olivier Naudan <o-naudan@ti.com>  Mon, 18 Oct 2010 11:00:00 +0200
+
 gstreamer0.10 (0.10.30-1+ti0.24.9.1+2) maverick; urgency=low
 
   * Added TI patches from 0.24.9.1
