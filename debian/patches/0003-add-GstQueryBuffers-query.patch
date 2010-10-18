@@ -1,4 +1,4 @@
-From 24a8e9a62e212f4e4e04076d6129b971ffd2fe02 Mon Sep 17 00:00:00 2001
+From 1bc45a61307168dae0bd786dd13d30365b350755 Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Wed, 19 May 2010 15:48:09 -0500
 Subject: [PATCH 3/6] add GstQueryBuffers query

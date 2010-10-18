@@ -1,4 +1,4 @@
-From c3bec64ea3f2391dcac0ae12b790f1eaa98380e6 Mon Sep 17 00:00:00 2001
+From 3b2df38a405b381d1340d3be8d61e0cb321ac6db Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Sat, 13 Feb 2010 15:29:13 -0600
 Subject: [PATCH 1/6] gst-launch: add --loop argument
