@@ -599,6 +599,7 @@ struct _GstElement
  * @send_event: send a #GstEvent to the element
  * @get_query_types: get the supported #GstQueryType of this element
  * @query: perform a #GstQuery on the element
+ * @request_new_pad_full: called when a new pad is requested. Since: 0.10.32.
  *
  * GStreamer element class. Override the vmethods to implement the element
  * functionality.
@@ -656,7 +657,17 @@ struct _GstElementClass
   gboolean              (*query)                (GstElement *element, GstQuery *query);
 
   /*< private >*/
-  gpointer _gst_reserved[GST_PADDING];
+  /* FIXME-0.11: move up and replace details */
+  gpointer		meta_data;
+
+  /*< public >*/
+  /* Virtual method for subclasses (additions) */
+  /* FIXME-0.11 Make this the default behaviour */
+  GstPad*		(*request_new_pad_full) (GstElement *element, GstPadTemplate *templ,
+						 const gchar* name, const GstCaps *caps);
+
+  /*< private >*/
+  gpointer _gst_reserved[GST_PADDING-2];
 };
 
 /* element class pad templates */
@@ -747,6 +758,9 @@ GstPad*                 gst_element_get_pad             (GstElement *element, co
 #endif /* GST_DISABLE_DEPRECATED */
 GstPad*                 gst_element_get_static_pad      (GstElement *element, const gchar *name);
 GstPad*                 gst_element_get_request_pad     (GstElement *element, const gchar *name);
+GstPad*                 gst_element_request_pad         (GstElement *element,
+							 GstPadTemplate *templ,
+							 const gchar * name, const GstCaps *caps);
 void                    gst_element_release_request_pad (GstElement *element, GstPad *pad);
 
 GstIterator *           gst_element_iterate_pads        (GstElement * element);
