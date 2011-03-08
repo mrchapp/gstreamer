@@ -3,6 +3,7 @@
 0003-add-GstQueryBuffers-query.patch
 0004-Add-GstEventCrop-event.patch
 0005-basetransform-don-t-do-unnecessary-pad_alloc.patch
+0100-Updated-GStreamer-documentation-according-to-TI-patc.patch
 01_valve-only-set-discont-once.patch
 80_ia32-hack.patch
 99_ltmain_as-needed.patch
