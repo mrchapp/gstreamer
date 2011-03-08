@@ -1,3 +1,8 @@
+0001-gst-launch-add-loop-argument.patch
+0002-Changes-to-make-it-possible-to-LD_PRELOAD-libttif.patch
+0003-add-GstQueryBuffers-query.patch
+0004-Add-GstEventCrop-event.patch
+0005-basetransform-don-t-do-unnecessary-pad_alloc.patch
 01_valve-only-set-discont-once.patch
 80_ia32-hack.patch
 99_ltmain_as-needed.patch
