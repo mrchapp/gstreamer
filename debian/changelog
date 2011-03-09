@@ -1,3 +1,9 @@
+gstreamer0.10 (0.10.32-3+ti0.24.12) natty; urgency=low
+
+  * Add TI patches.
+
+ -- Daniel Diaz <ddiaz@ti.com>  Tue, 08 Mar 2011 19:03:18 -0600
+
 gstreamer0.10 (0.10.32-3) unstable; urgency=low
 
   * debian/patches/01_valve-only-set-discont-once.patch
