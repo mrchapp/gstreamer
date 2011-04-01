@@ -20,6 +20,9 @@ libgstcoreelements_la_SOURCES =	\
 	gsttee.c		\
 	gsttypefindelement.c	\
 	gstvalve.c
+	gstmultiqueue.c \
+  gstinputselector.c \
+  gstoutputselector.c
 
 libgstcoreelements_la_CFLAGS = $(GST_OBJ_CFLAGS)
 libgstcoreelements_la_LIBADD = \
@@ -45,6 +48,9 @@ noinst_HEADERS =		\
 	gsttee.h		\
 	gsttypefindelement.h	\
 	gstvalve.h
+	gstmultiqueue.h \
+  gstinputselector.h \
+  gstoutputselector.h
 
 EXTRA_DIST = gstfdsrc.c \
 	     gstfdsink.c
