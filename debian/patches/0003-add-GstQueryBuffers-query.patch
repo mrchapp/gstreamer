@@ -1,7 +1,7 @@
-From 1bc45a61307168dae0bd786dd13d30365b350755 Mon Sep 17 00:00:00 2001
+From 241d4d7e9141f5bf85a8e4a621aae14824682ea4 Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Wed, 19 May 2010 15:48:09 -0500
-Subject: [PATCH 3/6] add GstQueryBuffers query
+Subject: [PATCH 3/5] add GstQueryBuffers query
 
 This query is used by buffer allocator, for example a video sink element,
 to find out any minimum buffer requirements of upstream elements that uses
@@ -11,13 +11,13 @@ decoders may have requirements for a certain minimum number of buffers (so
 they can hold refs to reference-frames)
 ---
  gst/gstquark.c |    3 +-
- gst/gstquark.h |    8 +++-
+ gst/gstquark.h |    7 ++-
  gst/gstquery.c |  141 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  gst/gstquery.h |   16 ++++++-
- 4 files changed, 165 insertions(+), 3 deletions(-)
+ 4 files changed, 164 insertions(+), 3 deletions(-)
 
 diff --git a/gst/gstquark.c b/gst/gstquark.c
-index a4253a9..58badca 100644
+index a4253a9..55d2c0b 100644
 --- a/gst/gstquark.c
 +++ b/gst/gstquark.c
 @@ -49,7 +49,8 @@ static const gchar *_quark_strings[] = {
@@ -25,28 +25,27 @@ index a4253a9..58badca 100644
    "intermediate", "GstMessageStepStart", "active", "eos", "sink-message",
    "message", "GstMessageQOS", "running-time", "stream-time", "jitter",
 -  "quality", "processed", "dropped"
-+  "quality", "processed", "dropped", "buffering-ranges", "GstQueryBuffers",
++  "quality", "processed", "dropped", "GstQueryBuffers",
 +  "caps", "count", "width", "height"
  };
  
  GQuark _priv_gst_quark_table[GST_QUARK_MAX];
 diff --git a/gst/gstquark.h b/gst/gstquark.h
-index 8273c3d..f4c8e0f 100644
+index 8273c3d..42e6f6a 100644
 --- a/gst/gstquark.h
 +++ b/gst/gstquark.h
-@@ -126,8 +126,14 @@ typedef enum _GstQuarkId
+@@ -126,8 +126,13 @@ typedef enum _GstQuarkId
    GST_QUARK_QUALITY = 97,
    GST_QUARK_PROCESSED = 98,
    GST_QUARK_DROPPED = 99,
-+  GST_QUARK_BUFFERING_RANGES = 100,
-+  GST_QUARK_QUERY_BUFFERS = 101,
-+  GST_QUARK_CAPS = 102,
-+  GST_QUARK_COUNT = 103,
-+  GST_QUARK_WIDTH = 104,
-+  GST_QUARK_HEIGHT = 105,
++  GST_QUARK_QUERY_BUFFERS = 100,
++  GST_QUARK_CAPS = 101,
++  GST_QUARK_COUNT = 102,
++  GST_QUARK_WIDTH = 103,
++  GST_QUARK_HEIGHT = 104,
  
 -  GST_QUARK_MAX = 100
-+  GST_QUARK_MAX = 106
++  GST_QUARK_MAX = 105
  } GstQuarkId;
  
  extern GQuark _priv_gst_quark_table[GST_QUARK_MAX];

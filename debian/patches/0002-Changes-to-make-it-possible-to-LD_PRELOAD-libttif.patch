@@ -1,7 +1,7 @@
-From c26ea46eb886c1eb74848871903b5c010b75aa53 Mon Sep 17 00:00:00 2001
+From 56adc3de0c778c8406db60a99f597bc06f14bbca Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Sun, 4 Apr 2010 09:14:34 -0500
-Subject: [PATCH 2/6] Changes to make it possible to LD_PRELOAD libttif
+Subject: [PATCH 2/5] Changes to make it possible to LD_PRELOAD libttif
 
 1) if GST_USING_PRINTF_EXTENSION, then prepend the fmt string with "<%P> " and
 pass object as a normal arg.  When using TTIF, you want the whole fmt string,
@@ -11,18 +11,21 @@ string pointer needs to be logged.
 GST_FUNCTION together and pass as a single ptr.. the optimization is probably
 lost in the noise with the default printf() based traces, but makes more of a
 difference with faster trace systems
+
+Incorporate modifications by Ricardo Salveti de Araujo in order to work out
+some errors from recent versions of GStreamer.
 ---
  gst/gstinfo.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++++-----
  gst/gstinfo.h |   70 ++++++++++++++++++++++++++++++++++++++++++++++++++++----
  2 files changed, 125 insertions(+), 11 deletions(-)
 
 diff --git a/gst/gstinfo.c b/gst/gstinfo.c
-index 02a2c94..9b3329e 100644
+index 02a2c94..a0fa15a 100644
 --- a/gst/gstinfo.c
 +++ b/gst/gstinfo.c
-@@ -441,6 +441,32 @@ gst_debug_log (GstDebugCategory * category, GstDebugLevel level,
-   va_end (var_args);
- }
+@@ -415,6 +415,32 @@ _gst_debug_init (void)
+ /* we can't do this further above, because we initialize the GST_CAT_DEFAULT struct */
+ #define GST_CAT_DEFAULT _GST_CAT_DEBUG
  
 +
 +/**
@@ -51,7 +54,7 @@ index 02a2c94..9b3329e 100644
 +
 +
  /**
-  * gst_debug_log_valist:
+  * gst_debug_log:
   * @category: category to log
 @@ -459,6 +485,32 @@ gst_debug_log_valist (GstDebugCategory * category, GstDebugLevel level,
      const gchar * file, const gchar * function, gint line,
