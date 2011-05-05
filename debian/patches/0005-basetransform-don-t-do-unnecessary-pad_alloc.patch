@@ -1,7 +1,7 @@
 From 4a414171c7e877ffc32c70ad9f1cc2b3cd9f659b Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Wed, 26 May 2010 14:42:40 -0500
-Subject: [PATCH 5/5] basetransform: don't do unnecessary pad_alloc()
+Subject: [PATCH 5/9] basetransform: don't do unnecessary pad_alloc()
 
 Don't allocate a buffer in passthrough mode.
 ---

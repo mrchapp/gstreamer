@@ -1,7 +1,7 @@
 From 56adc3de0c778c8406db60a99f597bc06f14bbca Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Sun, 4 Apr 2010 09:14:34 -0500
-Subject: [PATCH 2/5] Changes to make it possible to LD_PRELOAD libttif
+Subject: [PATCH 2/9] Changes to make it possible to LD_PRELOAD libttif
 
 1) if GST_USING_PRINTF_EXTENSION, then prepend the fmt string with "<%P> " and
 pass object as a normal arg.  When using TTIF, you want the whole fmt string,

@@ -1,7 +1,7 @@
 From 69ecaae91d0ecf97cbe3538038c2a4b35f7cacb7 Mon Sep 17 00:00:00 2001
 From: Rob Clark <rob@ti.com>
 Date: Mon, 24 May 2010 16:49:20 -0500
-Subject: [PATCH 4/5] Add GstEventCrop event
+Subject: [PATCH 4/9] Add GstEventCrop event
 
 This event can be used to set cropping / region-of-interest to take effect
 on the following buffer.
