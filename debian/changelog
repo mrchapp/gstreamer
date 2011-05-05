@@ -1,3 +1,10 @@
+gstreamer0.10 (0.10.30-1+ti0.24.12.2+1+cm1) maverick; urgency=low
+
+  * Backport patches needed by camerabin2
+  * Use dh-autoreconf
+
+ -- Alessandro Decina <alessandro.decina@collabora.co.uk>  Thu, 05 May 2011 23:59:29 +0200
+
 gstreamer0.10 (0.10.30-1+ti0.24.12.2+1) maverick; urgency=low
 
   * Refreshed TI patches from branch release-0.10.30+ti
