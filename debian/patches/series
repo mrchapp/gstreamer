@@ -3,7 +3,10 @@
 0003-add-GstQueryBuffers-query.patch
 0004-Add-GstEventCrop-event.patch
 0005-basetransform-don-t-do-unnecessary-pad_alloc.patch
+0006-GstElement-Add-a-more-flexible-way-to-get-request-pa.patch
+0007-GstElementFactory-Add-listing-features.patch
+0008-queue-add-silent-property-to-suppress-signal-emissio.patch
+0009-Backport-output-selector-from-33c86b9.patch
 0100-Updated-GStreamer-documentation-according-to-TI-patc.patch
-0110-Updated-the-autogen-generated-files.patch
 80_ia32-hack.patch
 99_ltmain_as-needed.patch
