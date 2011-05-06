@@ -111,6 +111,7 @@ static GstEventQuarks event_quarks[] = {
   {GST_EVENT_UNKNOWN, "unknown", 0},
   {GST_EVENT_FLUSH_START, "flush-start", 0},
   {GST_EVENT_FLUSH_STOP, "flush-stop", 0},
+  {GST_EVENT_LIVE_FLUSH, "live-flush", 0},
   {GST_EVENT_EOS, "eos", 0},
   {GST_EVENT_NEWSEGMENT, "newsegment", 0},
   {GST_EVENT_TAG, "tag", 0},
@@ -460,6 +461,13 @@ GstEvent *
 gst_event_new_flush_stop (void)
 {
   return gst_event_new (GST_EVENT_FLUSH_STOP);
+}
+
+
+GstEvent *
+gst_event_new_live_flush (void)
+{
+  return gst_event_new (GST_EVENT_LIVE_FLUSH);
 }
 
 /**
