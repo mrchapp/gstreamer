@@ -131,6 +131,7 @@ typedef enum {
   /* bidirectional events */
   GST_EVENT_FLUSH_START           = GST_EVENT_MAKE_TYPE (1, FLAG(BOTH)),
   GST_EVENT_FLUSH_STOP            = GST_EVENT_MAKE_TYPE (2, FLAG(BOTH) | FLAG(SERIALIZED)),
+  GST_EVENT_LIVE_FLUSH            = GST_EVENT_MAKE_TYPE (3, FLAG(BOTH)),
   /* downstream serialized events */
   GST_EVENT_EOS                   = GST_EVENT_MAKE_TYPE (5, FLAG(DOWNSTREAM) | FLAG(SERIALIZED)),
   GST_EVENT_NEWSEGMENT            = GST_EVENT_MAKE_TYPE (6, FLAG(DOWNSTREAM) | FLAG(SERIALIZED)),
@@ -424,6 +425,7 @@ void            gst_event_set_seqnum            (GstEvent *event, guint32 seqnum
 /* flush events */
 GstEvent *      gst_event_new_flush_start       (void);
 GstEvent *      gst_event_new_flush_stop        (void);
+GstEvent *      gst_event_new_live_flush        (void);
 
 /* EOS event */
 GstEvent *      gst_event_new_eos               (void);
