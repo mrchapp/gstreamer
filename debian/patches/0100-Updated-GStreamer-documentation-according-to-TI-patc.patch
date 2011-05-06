@@ -1,14 +1,14 @@
-From c68adce1f94bb173dcfba4e675dae21009297fcb Mon Sep 17 00:00:00 2001
-From: Olivier Naudan <o-naudan@ti.com>
-Date: Thu, 9 Sep 2010 18:22:46 +0200
-Subject: [PATCH] Updated GStreamer documentation according to TI patches
+From 77f754eb84d427cfc2f1d66a7f6702e2a45f0410 Mon Sep 17 00:00:00 2001
+From: Alessandro Decina <alessandro.decina@collabora.co.uk>
+Date: Fri, 6 May 2011 09:00:28 +0200
+Subject: [PATCH] Update gstreamer-sections.txt
 
 ---
- docs/gst/gstreamer-sections.txt |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
+ docs/gst/gstreamer-sections.txt |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
 
 diff --git a/docs/gst/gstreamer-sections.txt b/docs/gst/gstreamer-sections.txt
-index b5cbad2..3ee563d 100644
+index b5cbad2..abefe1e 100644
 --- a/docs/gst/gstreamer-sections.txt
 +++ b/docs/gst/gstreamer-sections.txt
 @@ -749,6 +749,9 @@ gst_event_parse_buffer_size
@@ -21,7 +21,7 @@ index b5cbad2..3ee563d 100644
  GstSeekType
  GstSeekFlags
  gst_event_new_seek
-@@ -956,12 +959,25 @@ GST_LEVEL_DEFAULT
+@@ -956,12 +959,23 @@ GST_LEVEL_DEFAULT
  GstDebugColorFlags
  GstDebugCategory
  GstDebugGraphDetails
@@ -36,8 +36,6 @@ index b5cbad2..3ee563d 100644
 +gst_debug_log_valist2
 +gst_debug_print_object
 +gst_debug_print_segment
-+gst_event_new_vstab
-+gst_event_parse_vstab
 +gst_query_new_buffers
 +gst_query_parse_buffers_caps
 +gst_query_parse_buffers_count
@@ -47,7 +45,7 @@ index b5cbad2..3ee563d 100644
  gst_debug_message_get
  gst_debug_log_default
  gst_debug_level_get_name
-@@ -992,6 +1008,8 @@ gst_debug_get_all_categories
+@@ -992,6 +1006,8 @@ gst_debug_get_all_categories
  gst_debug_construct_term_color
  gst_debug_construct_win_color
  GST_CAT_LEVEL_LOG
@@ -56,7 +54,7 @@ index b5cbad2..3ee563d 100644
  GST_CAT_ERROR_OBJECT
  GST_CAT_WARNING_OBJECT
  GST_CAT_INFO_OBJECT
-@@ -1032,6 +1050,7 @@ GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS
+@@ -1032,6 +1048,7 @@ GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS
  gst_debug_print_stack_trace
  GST_TIME_FORMAT
  GST_TIME_ARGS
