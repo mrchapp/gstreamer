@@ -803,7 +803,6 @@ libgstreamer-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_event_new_sink_message@Base 0.10.26
  gst_event_new_step@Base 0.10.24
  gst_event_new_tag@Base 0.10.0
- gst_event_new_vstab@Base 0.10.30-1+ti0.24.12.2+1
  gst_event_parse_buffer_size@Base 0.10.0
  gst_event_parse_latency@Base 0.10.12
  gst_event_parse_new_segment@Base 0.10.0
@@ -813,7 +812,6 @@ libgstreamer-0.10.so.0 libgstreamer0.10-0 #MINVER#
  gst_event_parse_sink_message@Base 0.10.26
  gst_event_parse_step@Base 0.10.24
  gst_event_parse_tag@Base 0.10.0
- gst_event_parse_vstab@Base 0.10.30-1+ti0.24.12.2+1
  gst_event_set_seqnum@Base 0.10.22
  gst_event_type_flags_get_type@Base 0.10.0
  gst_event_type_get_flags@Base 0.10.0
