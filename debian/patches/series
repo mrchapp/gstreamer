@@ -8,6 +8,6 @@
 0008-queue-add-silent-property-to-suppress-signal-emissio.patch
 0009-Backport-output-selector-from-33c86b9.patch
 0010-Add-GST_EVENT_LIVE_FLUSH.patch
-0100-Updated-GStreamer-documentation-according-to-TI-patc.patch
+0011-Updated-GStreamer-documentation-according-to-TI-patc.patch
 80_ia32-hack.patch
 99_ltmain_as-needed.patch
